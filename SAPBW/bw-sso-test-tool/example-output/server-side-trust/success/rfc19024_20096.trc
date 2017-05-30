@@ -1,0 +1,425 @@
+
+**** Trace file opened at 2017-05-30, 13:53:20 Pacific Daylight Time
+ RFC library: 742, Current working directory: C:\SAP, Program: BWSSOTestTool
+ Hardware: PC with Windows NT 32x Intel 80686 (Mod 63 Step 2), Operating_system: Windows NT 6.1, Kernel_release: 742 patchlevel 0
+ Hostname: JOESERVER, IP address: 10.01.01.01, IP address_v6: 10.01.01.01
+
+>> RfcOpenConnection
+>> RfcOptions
+	Partner Char Size: 1
+	Client: 800
+	User: 
+	Alias: 
+	Passwd: (- null -)
+	Language: 
+	MySAPSSO2: 
+	GetSSO2: 0
+	X.509 Certificate: 
+	ExtidData: developer3
+	ExtidType: UN
+	SysNr: 00
+	ASHost: sapbw74.test.tsi.lan
+	ASService: 
+	GWHost: 
+	GWService: 
+	R3Name: 
+	MSHost: 
+	MSService: 
+	Group: PUBLIC
+	ProgramID: 
+	SAPRouter: 
+	SNC Mode: 1
+	SNC QOP: 0
+	SNC Lib: C:\Program Files\sap\crypto\sapcrypto.dll
+	SNC Myname: 
+	SNC Partnername: p:CN=SapServiceA4H
+	Codepage: 1100
+	Trace: 1
+	LogonCheck: 1
+	No Compression: 0
+	Ignore Char Conv Errors: 0
+	Substitution Char: 35
+	UseRoundtripOptimization: 0
+<< RfcOptions
+
+>> RfcConnection name="none"
+Handle = 17600960 ConvID = 81399665
+<< RfcConnection
+
+<< RfcOpenConnection returned RFC_OK
+
+>> RfcCloseConnection
+>> RfcConnection name="none"
+Handle = 17600960 ConvID = 81399665
+<< RfcConnection
+
+<< RfcCloseConnection returned RFC_OK
+
+>> RfcOpenConnection
+>> RfcOptions
+	Partner Char Size: 1
+	Client: 800
+	User: 
+	Alias: 
+	Passwd: (- null -)
+	Language: 
+	MySAPSSO2: 
+	GetSSO2: 0
+	X.509 Certificate: 
+	ExtidData: developer3
+	ExtidType: UN
+	SysNr: 00
+	ASHost: sapbw74.test.tsi.lan
+	ASService: 
+	GWHost: 
+	GWService: 
+	R3Name: 
+	MSHost: 
+	MSService: 
+	Group: PUBLIC
+	ProgramID: 
+	SAPRouter: 
+	SNC Mode: 1
+	SNC QOP: 0
+	SNC Lib: C:\Program Files\sap\crypto\sapcrypto.dll
+	SNC Myname: 
+	SNC Partnername: p:CN=SapServiceA4H
+	Codepage: 1100
+	Trace: 1
+	LogonCheck: 1
+	No Compression: 0
+	Ignore Char Conv Errors: 0
+	Substitution Char: 35
+	UseRoundtripOptimization: 0
+<< RfcOptions
+
+>> RfcConnection name="none"
+Handle = 17747848 ConvID = 81400811
+<< RfcConnection
+
+<< RfcOpenConnection returned RFC_OK
+
+>> RfcGetFunctionDesc
+RfcGetFunctionDesc(BAPI_MDPROVIDER_GET_INFO) via handle 17747848
+Repository::addStructureDescToCache(0103B888)
+	 name=BAPIRET2 (origin=A4H) with 14 parameters
+	 parameter 0 (TYPE, RFCTYPE_CHAR, 1, 0, 2, 0, 0,  00000000, 00000000)
+	 parameter 1 (ID, RFCTYPE_CHAR, 20, 1, 40, 2, 0,  00000000, 00000000)
+	 parameter 2 (NUMBER, RFCTYPE_NUM, 3, 21, 6, 42, 0,  00000000, 00000000)
+	 parameter 3 (MESSAGE, RFCTYPE_CHAR, 220, 24, 440, 48, 0,  00000000, 00000000)
+	 parameter 4 (LOG_NO, RFCTYPE_CHAR, 20, 244, 40, 488, 0,  00000000, 00000000)
+	 parameter 5 (LOG_MSG_NO, RFCTYPE_NUM, 6, 264, 12, 528, 0,  00000000, 00000000)
+	 parameter 6 (MESSAGE_V1, RFCTYPE_CHAR, 50, 270, 100, 540, 0,  00000000, 00000000)
+	 parameter 7 (MESSAGE_V2, RFCTYPE_CHAR, 50, 320, 100, 640, 0,  00000000, 00000000)
+	 parameter 8 (MESSAGE_V3, RFCTYPE_CHAR, 50, 370, 100, 740, 0,  00000000, 00000000)
+	 parameter 9 (MESSAGE_V4, RFCTYPE_CHAR, 50, 420, 100, 840, 0,  00000000, 00000000)
+	 parameter 10 (PARAMETER, RFCTYPE_CHAR, 32, 470, 64, 940, 0,  00000000, 00000000)
+	 parameter 11 (ROW, RFCTYPE_INT, 4, 504, 4, 1004, 0,  00000000, 00000000)
+	 parameter 12 (FIELD, RFCTYPE_CHAR, 30, 508, 60, 1008, 0,  00000000, 00000000)
+	 parameter 13 (SYSTEM, RFCTYPE_CHAR, 10, 538, 20, 1068, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B888)
+	 name=BAPIRET2 (origin=A4H) with 14 parameters
+	 parameter 0 (TYPE, RFCTYPE_CHAR, 1, 0, 2, 0, 0,  00000000, 00000000)
+	 parameter 1 (ID, RFCTYPE_CHAR, 20, 1, 40, 2, 0,  00000000, 00000000)
+	 parameter 2 (NUMBER, RFCTYPE_NUM, 3, 21, 6, 42, 0,  00000000, 00000000)
+	 parameter 3 (MESSAGE, RFCTYPE_CHAR, 220, 24, 440, 48, 0,  00000000, 00000000)
+	 parameter 4 (LOG_NO, RFCTYPE_CHAR, 20, 244, 40, 488, 0,  00000000, 00000000)
+	 parameter 5 (LOG_MSG_NO, RFCTYPE_NUM, 6, 264, 12, 528, 0,  00000000, 00000000)
+	 parameter 6 (MESSAGE_V1, RFCTYPE_CHAR, 50, 270, 100, 540, 0,  00000000, 00000000)
+	 parameter 7 (MESSAGE_V2, RFCTYPE_CHAR, 50, 320, 100, 640, 0,  00000000, 00000000)
+	 parameter 8 (MESSAGE_V3, RFCTYPE_CHAR, 50, 370, 100, 740, 0,  00000000, 00000000)
+	 parameter 9 (MESSAGE_V4, RFCTYPE_CHAR, 50, 420, 100, 840, 0,  00000000, 00000000)
+	 parameter 10 (PARAMETER, RFCTYPE_CHAR, 32, 470, 64, 940, 0,  00000000, 00000000)
+	 parameter 11 (ROW, RFCTYPE_INT, 4, 504, 4, 1004, 0,  00000000, 00000000)
+	 parameter 12 (FIELD, RFCTYPE_CHAR, 30, 508, 60, 1008, 0,  00000000, 00000000)
+	 parameter 13 (SYSTEM, RFCTYPE_CHAR, 10, 538, 20, 1068, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B930)
+	 name=BAPI6111STT (origin=A4H) with 1 parameters
+	 parameter 0 (STEP, RFCTYPE_CHAR, 25, 0, 50, 0, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B930)
+	 name=BAPI6111STT (origin=A4H) with 1 parameters
+	 parameter 0 (STEP, RFCTYPE_CHAR, 25, 0, 50, 0, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B9D8)
+	 name=BAPI6110DSI (origin=A4H) with 2 parameters
+	 parameter 0 (ID, RFCTYPE_NUM, 10, 0, 20, 0, 0,  00000000, 00000000)
+	 parameter 1 (VALUE, RFCTYPE_NUM, 10, 10, 20, 20, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B9D8)
+	 name=BAPI6110DSI (origin=A4H) with 2 parameters
+	 parameter 0 (ID, RFCTYPE_NUM, 10, 0, 20, 0, 0,  00000000, 00000000)
+	 parameter 1 (VALUE, RFCTYPE_NUM, 10, 10, 20, 20, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B888)
+	 name=BAPIRET2 (origin=A4H) with 14 parameters
+	 parameter 0 (TYPE, RFCTYPE_CHAR, 1, 0, 2, 0, 0,  00000000, 00000000)
+	 parameter 1 (ID, RFCTYPE_CHAR, 20, 1, 40, 2, 0,  00000000, 00000000)
+	 parameter 2 (NUMBER, RFCTYPE_NUM, 3, 21, 6, 42, 0,  00000000, 00000000)
+	 parameter 3 (MESSAGE, RFCTYPE_CHAR, 220, 24, 440, 48, 0,  00000000, 00000000)
+	 parameter 4 (LOG_NO, RFCTYPE_CHAR, 20, 244, 40, 488, 0,  00000000, 00000000)
+	 parameter 5 (LOG_MSG_NO, RFCTYPE_NUM, 6, 264, 12, 528, 0,  00000000, 00000000)
+	 parameter 6 (MESSAGE_V1, RFCTYPE_CHAR, 50, 270, 100, 540, 0,  00000000, 00000000)
+	 parameter 7 (MESSAGE_V2, RFCTYPE_CHAR, 50, 320, 100, 640, 0,  00000000, 00000000)
+	 parameter 8 (MESSAGE_V3, RFCTYPE_CHAR, 50, 370, 100, 740, 0,  00000000, 00000000)
+	 parameter 9 (MESSAGE_V4, RFCTYPE_CHAR, 50, 420, 100, 840, 0,  00000000, 00000000)
+	 parameter 10 (PARAMETER, RFCTYPE_CHAR, 32, 470, 64, 940, 0,  00000000, 00000000)
+	 parameter 11 (ROW, RFCTYPE_INT, 4, 504, 4, 1004, 0,  00000000, 00000000)
+	 parameter 12 (FIELD, RFCTYPE_CHAR, 30, 508, 60, 1008, 0,  00000000, 00000000)
+	 parameter 13 (SYSTEM, RFCTYPE_CHAR, 10, 538, 20, 1068, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B930)
+	 name=BAPI6111STT (origin=A4H) with 1 parameters
+	 parameter 0 (STEP, RFCTYPE_CHAR, 25, 0, 50, 0, 0,  00000000, 00000000)
+Repository::addStructureDescToCache(0103B9D8)
+	 name=BAPI6110DSI (origin=A4H) with 2 parameters
+	 parameter 0 (ID, RFCTYPE_NUM, 10, 0, 20, 0, 0,  00000000, 00000000)
+	 parameter 1 (VALUE, RFCTYPE_NUM, 10, 10, 20, 20, 0,  00000000, 00000000)
+Repository::queryFunctionMetaData(BAPI_MDPROVIDER_GET_INFO) via handle 17747848 returns function meta 0104A9F8
+	 name=BAPI_MDPROVIDER_GET_INFO (origin=A4H) with 3 parameters
+	 parameter 0 (RETURN, RFCTYPE_STRUCTURE, RFC_EXPORT, 548, 1088, 0, 0103B888, , BAPI Return Parameter, 0, D84E67A2)
+	 parameter 1 (STATISTIC, RFCTYPE_STRUCTURE, RFC_EXPORT, 25, 50, 0, 0103B930, , BI Statistics, 0, D84E67A2)
+	 parameter 2 (MDPROPERTIES, RFCTYPE_TABLE, RFC_TABLES, 20, 40, 0, 0103B9D8, , Provider Provider, 0, D84E67A2)
+RfcGetFunctionDesc(BAPI_MDPROVIDER_GET_INFO) via handle 17747848 (SID=A4H) returned 0104A9F8
+<< RfcGetFunctionDesc returned RFC_OK
+
+>> RfcCreateFunction
+<< RfcCreateFunction returned RFC_OK
+
+>> RfcInvoke
+Invoking BAPI_MDPROVIDER_GET_INFO on handle 17747848
+
+>> RfcFunction name="BAPI_MDPROVIDER_GET_INFO"
+>> IMPORTING parameters
+<< IMPORTING parameters
+
+>> CHANGING parameters
+<< CHANGING parameters
+
+>> TABLES parameters
+>> MDPROPERTIES, RFCTYPE_TABLE, Length: 0, Active: true, Requested: false
+	Value: (empty)
+<< MDPROPERTIES
+
+<< TABLES parameters
+
+<< RfcFunction
+
+>> RfcFunction name="BAPI_MDPROVIDER_GET_INFO"
+>> EXPORTING parameters
+>> RETURN, RFCTYPE_STRUCTURE, Length: 0, Active: true, Requested: false
+>> RfcRecordMetaData name="BAPIRET2"
+	FieldCount: 14
+	FieldName: TYPE		FieldType: RFCTYPE_CHAR		NUC-length: 1		UC-length: 2		NUC-offset: 0		UC-offset: 0
+	FieldName: ID		FieldType: RFCTYPE_CHAR		NUC-length: 20		UC-length: 40		NUC-offset: 1		UC-offset: 2
+	FieldName: NUMBER		FieldType: RFCTYPE_NUM		NUC-length: 3		UC-length: 6		NUC-offset: 21		UC-offset: 42
+	FieldName: MESSAGE		FieldType: RFCTYPE_CHAR		NUC-length: 220		UC-length: 440		NUC-offset: 24		UC-offset: 48
+	FieldName: LOG_NO		FieldType: RFCTYPE_CHAR		NUC-length: 20		UC-length: 40		NUC-offset: 244		UC-offset: 488
+	FieldName: LOG_MSG_NO		FieldType: RFCTYPE_NUM		NUC-length: 6		UC-length: 12		NUC-offset: 264		UC-offset: 528
+	FieldName: MESSAGE_V1		FieldType: RFCTYPE_CHAR		NUC-length: 50		UC-length: 100		NUC-offset: 270		UC-offset: 540
+	FieldName: MESSAGE_V2		FieldType: RFCTYPE_CHAR		NUC-length: 50		UC-length: 100		NUC-offset: 320		UC-offset: 640
+	FieldName: MESSAGE_V3		FieldType: RFCTYPE_CHAR		NUC-length: 50		UC-length: 100		NUC-offset: 370		UC-offset: 740
+	FieldName: MESSAGE_V4		FieldType: RFCTYPE_CHAR		NUC-length: 50		UC-length: 100		NUC-offset: 420		UC-offset: 840
+	FieldName: PARAMETER		FieldType: RFCTYPE_CHAR		NUC-length: 32		UC-length: 64		NUC-offset: 470		UC-offset: 940
+	FieldName: ROW		FieldType: RFCTYPE_INT		NUC-length: 4		UC-length: 4		NUC-offset: 504		UC-offset: 1004
+	FieldName: FIELD		FieldType: RFCTYPE_CHAR		NUC-length: 30		UC-length: 60		NUC-offset: 508		UC-offset: 1008
+	FieldName: SYSTEM		FieldType: RFCTYPE_CHAR		NUC-length: 10		UC-length: 20		NUC-offset: 538		UC-offset: 1068
+<< RfcRecordMetaData
+
+>> RfcStructure name="BAPIRET2"
+	Width: 1088		FieldCount: 14
+	FieldName: TYPE		Value: 
+	FieldName: ID		Value: 
+	FieldName: NUMBER		Value: 000
+	FieldName: MESSAGE		Value: 
+	FieldName: LOG_NO		Value: 
+	FieldName: LOG_MSG_NO		Value: 000000
+	FieldName: MESSAGE_V1		Value: 
+	FieldName: MESSAGE_V2		Value: 
+	FieldName: MESSAGE_V3		Value: 
+	FieldName: MESSAGE_V4		Value: 
+	FieldName: PARAMETER		Value: 
+	FieldName: ROW		Value: 0
+	FieldName: FIELD		Value: 
+	FieldName: SYSTEM		Value: 
+<< RfcStructure
+
+<< RETURN
+
+>> STATISTIC, RFCTYPE_STRUCTURE, Length: 0, Active: true, Requested: false
+>> RfcRecordMetaData name="BAPI6111STT"
+	FieldCount: 1
+	FieldName: STEP		FieldType: RFCTYPE_CHAR		NUC-length: 25		UC-length: 50		NUC-offset: 0		UC-offset: 0
+<< RfcRecordMetaData
+
+>> RfcStructure name="BAPI6111STT"
+	Width: 50		FieldCount: 1
+	FieldName: STEP		Value: 00O2TO8GBKSCOEUZCCC4F0QWU
+<< RfcStructure
+
+<< STATISTIC
+
+<< EXPORTING parameters
+
+>> CHANGING parameters
+<< CHANGING parameters
+
+>> TABLES parameters
+>> MDPROPERTIES, RFCTYPE_TABLE, Length: 0, Active: true, Requested: false
+>> RfcRecordMetaData name="BAPI6110DSI"
+	FieldCount: 2
+	FieldName: ID		FieldType: RFCTYPE_NUM		NUC-length: 10		UC-length: 20		NUC-offset: 0		UC-offset: 0
+	FieldName: VALUE		FieldType: RFCTYPE_NUM		NUC-length: 10		UC-length: 20		NUC-offset: 10		UC-offset: 20
+<< RfcRecordMetaData
+
+>> RfcTable name="BAPI6110DSI"
+	Width: 40
+	Number of rows: 24
+	Compressed: 0
+<< RfcTable
+
+<< MDPROPERTIES
+
+<< TABLES parameters
+
+<< RfcFunction
+
+<< RfcInvoke returned RFC_OK
+
+>> RfcMoveToFirstRow
+<< RfcMoveToFirstRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_OK
+
+>> RfcMoveToNextRow
+<< RfcMoveToNextRow returned RFC_TABLE_MOVE_EOF
+
+>> RfcGetConnectionAttributes
+<< RfcGetConnectionAttributes returned RFC_OK
+
+>> RfcDestroyFunction
+<< RfcDestroyFunction returned RFC_OK
+
+>> RfcCloseConnection
+>> RfcConnection name="none"
+Handle = 17747848 ConvID = 81400811
+<< RfcConnection
+
+<< RfcCloseConnection returned RFC_OK
+
+>> RfcOpenConnection
+>> RfcOptions
+	Partner Char Size: 1
+	Client: 800
+	User: 
+	Alias: 
+	Passwd: (- null -)
+	Language: 
+	MySAPSSO2: 
+	GetSSO2: 0
+	X.509 Certificate: 
+	ExtidData: developer3
+	ExtidType: UN
+	SysNr: 00
+	ASHost: sapbw74.test.tsi.lan
+	ASService: 
+	GWHost: 
+	GWService: 
+	R3Name: 
+	MSHost: 
+	MSService: 
+	Group: PUBLIC
+	ProgramID: 
+	SAPRouter: 
+	SNC Mode: 1
+	SNC QOP: 0
+	SNC Lib: C:\Program Files\sap\crypto\sapcrypto.dll
+	SNC Myname: 
+	SNC Partnername: p:CN=SapServiceA4H
+	Codepage: 1100
+	Trace: 1
+	LogonCheck: 1
+	No Compression: 0
+	Ignore Char Conv Errors: 0
+	Substitution Char: 35
+	UseRoundtripOptimization: 0
+<< RfcOptions
+
+>> RfcConnection name="none"
+Handle = 17779944 ConvID = 81402030
+<< RfcConnection
+
+<< RfcOpenConnection returned RFC_OK
+
+>> RfcGetConnectionAttributes
+<< RfcGetConnectionAttributes returned RFC_OK
+
+>> RfcCloseConnection
+>> RfcConnection name="none"
+Handle = 17779944 ConvID = 81402030
+<< RfcConnection
+
+<< RfcCloseConnection returned RFC_OK
+

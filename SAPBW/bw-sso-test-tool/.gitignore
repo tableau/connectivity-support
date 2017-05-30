@@ -1,0 +1,6 @@
+*.db
+*.opendb
+*.filters
+*.user
+Release/
+.vs/

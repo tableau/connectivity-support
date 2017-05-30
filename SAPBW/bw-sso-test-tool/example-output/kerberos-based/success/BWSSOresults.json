@@ -1,0 +1,88 @@
+{
+"installed-components": [
+  {"bitness": "64", "name": "SAP HANA Studio 64bit", "version": "2.3.5.000000"},
+  {"bitness": "64", "name": "SAP Adaptive Server Enterprise", "version": "16.0.0.0"},
+  {"bitness": "64", "name": "SAP IQ Client Suite 16.0 sp11.01 (64-bit) ", "version": "16.0.8.0"},
+  {"bitness": "64", "name": "SAP Secure Login Client (x64)", "version": "2.0.6.5.0"},
+  {"bitness": "32", "name": "SAP Business Explorer", "version": "7.40"},
+  {"bitness": "32", "name": "SAP GUI for Windows 7.40  (Patch 8)", "version": "7.40 Compilation 3"},
+  {"bitness": "32", "name": "SAP BW ODBO driver 64 bit", "version": ""}
+],
+"odbo-providers": [
+  {"bitness": "32", "location": "c:\\program files (x86)\\common files\\sap shared\\bw\\oleolap\\mdrmsap.dll", "version": "4.0.0.7",
+  "associated-files": [
+    {"location": "c:\\program files (x86)\\common files\\sap shared\\bw\\oleolap\\mdrmsap.dll", "version": "4.0.0.7"},
+    {"location": "c:\\program files (x86)\\common files\\sap shared\\bw\\oleolap\\scerrlkp.dll", "version": "4.0.0.7"}
+]
+},
+  {"bitness": "64", "location": "C:\\Program Files\\SAP\\ODBO\\MDrmSAP.dll", "version": "4.0.0.7",
+  "associated-files": [
+    {"location": "C:\\Program Files\\SAP\\ODBO\\icudt34.dll", "version": "3.4.0.0"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\icuin34.dll", "version": "3.4.0.0"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\icuuc34.dll", "version": "3.4.0.0"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\libicudecnumber.dll", "version": "7210.714.25.58491"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\librfc32.dll", "version": "7200.0.59.6604"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\librfc32u.dll", "version": "7110.0.67.6372"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\libsapu16vc80.dll", "version": "7110.67.17.7597"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\libsapucum.dll", "version": "7110.67.17.7597"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\LogonDialog.dll", "version": "1.0.0.1"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\MDrmDlg.dll", "version": "3.9.4.5"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\MDrmSAP.dll", "version": "4.0.0.7"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\sapnwrfc.dll", "version": "7210.714.25.58491"},
+    {"location": "C:\\Program Files\\SAP\\ODBO\\ScErrLkp.dll", "version": "4.0.0.7"}
+]
+}
+],
+"environment-variables": [
+  {"name": "APPDATA", "value": "C:\\Users\\joeclient\\AppData\\Roaming"},
+  {"name": "SAPLOGON_INI_FILE", "value": "c:\\SAP\\saplogon.ini"},
+  {"name": "SNC_LIB", "value": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sapcrypto.dll"}
+],
+"snc-lib": [
+  {"bitness": "--", "location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sapcrypto.dll", "version": "8.4.49.0",
+  "associated-files": [
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sapcrypto.dll", "version": "8.4.49.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sapcsp.dll", "version": "2.0.6003.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sapnwsso.dll", "version": "8.4.49.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbus.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbusbase.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbuscompipe.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbuscomsock.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbusgui.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbuspinpolicy.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbuspkcs11.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbuspolicy.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbusps.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbuspse.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbusresloader.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbusslogin.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbussto.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sbusstring.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\secocsp.dll", "version": "8.4.49.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\secpkcs11.dll", "version": "8.4.49.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\slcax.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\slcryptokernel.dll", "version": "8.4.49.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\slsax.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\slwc.dll", "version": "2.0.6005.0"},
+    {"location": "C:\\Program Files (x86)\\SAP\\FrontEnd\\SecureLogin\\lib\\sncax.dll", "version": "2.0.6005.0"}
+]
+}
+],
+"logon-config-source": {"source": "landscape xml", "path": "C:\\SAP\\SAPUILandscape.xml", "path-source": "PathConfigFilesLocal", "path-global": "\\\\tsi.lan\\files\\Software\\Databases\\All Database Software\\SAP BW\\SAPUILandscape\\SAPUILandscapeGlobal.xml", "path-global-source": "LandscapeFileOnServer"},
+"selected-connection": {"name": "|SSO|Tableau's SAP Server A4H", "SncName": "p:CN=SAPServiceA4H@DEV.TSI.LAN", "SncChoice": "1  Authentication only", "SncNoSSO": ""},
+"connection-attempt": {
+  "client": "800",
+  "language": "",
+  "auth-type": "SSO",
+  "connectString": "Provider=MDrmSap.2;Data Source=|SSO|Tableau's SAP Server A4H;SFC_CLIENT=800;SFC_LANGUAGE=;Prompt=NoPrompt;",
+  "messages": [
+    "CoInitialize succeeded",
+    "OpenFromInitializationString succeeded",
+    "Session Open succeeded"
+]
+},
+"configuration-warnings": [
+
+],
+"exit-code": "0"
+}
