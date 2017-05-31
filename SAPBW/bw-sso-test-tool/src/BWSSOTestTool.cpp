@@ -49,7 +49,9 @@ enum warnCondition
     LOGONCONFIG_ERROR,
     NO_ODBO_PROVIDER,
     NO_32BIT_ODBO_PROVIDER,
+    NO_64BIT_ODBO_PROVIDER,
     BAD_32BIT_ODBO_PROVIDER_VERSION,
+    BAD_64BIT_ODBO_PROVIDER_VERSION,
     BAD_SNC_LIB_VERSION_SSO,
     BAD_SNC_LIB_VERSION_SST,
     ENV_VAR_RFC_TRACE_NOT_SET,
@@ -86,6 +88,7 @@ set<warnCondition> warningConditions;
 // Note: As currently coded, version constants must have all
 //       four digits, to prevent uninitialized trailing digits garbage. 
 UINT MIN_DRIVER_VERSION_32_BIT[] = { 4,0,0,7 };
+UINT MIN_DRIVER_VERSION_64_BIT[] = { 4,0,0,7 };
 UINT MIN_SNC_LIB_VERSION_SST[] = { 8,4,33,0 };
 UINT MIN_SNC_LIB_VERSION_SSO[] = { 8,4,49,0 };
 
@@ -109,9 +112,11 @@ map<warnCondition, string> warnStrings = {
         { LOGONCONFIG_ERROR, "Unable to determine SAP Logon configuration source" },
         { NO_ODBO_PROVIDER, "No ODBO provider found" },
         { NO_32BIT_ODBO_PROVIDER, "No 32-bit ODBO provider found" },
+        { NO_64BIT_ODBO_PROVIDER, "No 64-bit ODBO provider found" },
         { BAD_SNC_LIB_VERSION_SSO, "SncLib for SSO version less than " + fileVersionToString(MIN_SNC_LIB_VERSION_SSO) },
         { BAD_SNC_LIB_VERSION_SST, "SncLib for SST version less than " + fileVersionToString(MIN_SNC_LIB_VERSION_SST) },
         { BAD_32BIT_ODBO_PROVIDER_VERSION, "32-bit ODBO provider version less than " + fileVersionToString( MIN_DRIVER_VERSION_32_BIT ) },
+        { BAD_64BIT_ODBO_PROVIDER_VERSION, "64-bit ODBO provider version less than " + fileVersionToString( MIN_DRIVER_VERSION_64_BIT ) + ", will not support Landscape XML" },
         { ENV_VAR_RFC_TRACE_NOT_SET, "Unable to set RFC_TRACE environment variable" },
         { ENV_VAR_APPDATA_NOT_FOUND, "Environment variable APPDATA not found or empty" },
         { ENV_VAR_PATH_NOT_FOUND, "Environment variable Path not found or empty" },
@@ -548,6 +553,10 @@ void outputConfigWarnings( bool bSSOConnect, bool bImpersonateViaSST )
         case ENV_VAR_APPDATA_NOT_FOUND:
             if ( logonConfigSource == ConfigSource::LANDSCAPE_XML )
                 warnings.push_back( warnStrings[warnCondition] );
+            break;
+        case ENV_VAR_SAPLOGON_INI_FILE_NOT_FOUND:
+            if ( logonConfigSource == ConfigSource::SAPLOGON_INI )
+                warnings.push_back(warnStrings[warnCondition]);
             break;
         default:
             warnings.push_back( warnStrings[warnCondition] );
@@ -1302,8 +1311,6 @@ void sapLogonConfigSource()
         logonConfigSource = ConfigSource::LANDSCAPE_XML;
     else
     {
-        const wstring warnStr = L"Unable to determine SAP Logon configuration source";
-
         HKEY hkey;
         LPCWSTR key = L"SOFTWARE\\Wow6432Node\\SAP\\SAPLogon";
         if ( RegOpenKeyExW( HKEY_LOCAL_MACHINE, key, 0, KEY_READ, &hkey ) == ERROR_SUCCESS )
@@ -1657,10 +1664,12 @@ void fileVersions( dllStruct& dll, string extension )
 //#endif
 //}
 
-void check32bitDriverVersion( const dllStruct& dll)
+void checkDriverVersion( const dllStruct& dll )
 {
-    if ( dll.file.compareVersion( MIN_DRIVER_VERSION_32_BIT ) < 0 )
+    if ( dll.bitness.compare("32") == 0 && dll.file.compareVersion( MIN_DRIVER_VERSION_32_BIT ) < 0 )
         warningConditions.insert( BAD_32BIT_ODBO_PROVIDER_VERSION );
+    else if ( dll.file.compareVersion( MIN_DRIVER_VERSION_64_BIT ) < 0 )
+        warningConditions.insert( BAD_64BIT_ODBO_PROVIDER_VERSION );
 }
 
 // TODO make this work when app is built for 32-bit OS? 
@@ -1696,7 +1705,7 @@ void odboProviders()
         fileVersions( dll, "dll" );
         vecOdboProviders.push_back(dll);
 
-        check32bitDriverVersion(dll);
+        checkDriverVersion(dll);
 
         RegCloseKey( key );
     }
@@ -1715,11 +1724,15 @@ void odboProviders()
         fileVersions(dll, "dll" );
         vecOdboProviders.push_back(dll);
 
+        checkDriverVersion(dll);
+
         RegCloseKey( key );
     }
 
     if ( !b32found )
         warningConditions.insert( NO_32BIT_ODBO_PROVIDER );
+    if ( !b64found )
+        warningConditions.insert( NO_64BIT_ODBO_PROVIDER );
     if ( !b32found && !b64found )
         warningConditions.insert( NO_ODBO_PROVIDER );
     
