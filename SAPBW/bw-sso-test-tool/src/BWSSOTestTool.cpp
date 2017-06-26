@@ -64,9 +64,11 @@ enum warnCondition
     ENV_VAR_SNC_LIB_SSO_EQUALS,
     ENV_VAR_SNC_LIB_SST_EQUALS,
     FILE_NOT_FOUND_SAPLOGON_INI,
-    MISSING_SNC_LIB_DLL
+    MISSING_SNC_LIB_DLL,
+    SECUDIR_MISSING_CREDV2,
+    SECUDIR_MISSING_CRT,
+    SECUDIR_MISSING_PSE
 };
-
 
 using namespace std;
 IUnknown *	pIUnknown = NULL;
@@ -127,7 +129,10 @@ map<warnCondition, string> warnStrings = {
         { ENV_VAR_SNC_LIB_SSO_EQUALS, "Environment variable SNC_LIB does not have expected value for SSO: " + converter.to_bytes(SNC_LIB_SSO) },
         { ENV_VAR_SNC_LIB_SST_EQUALS, "Environment variable SNC_LIB does not have expected value for SST: " + converter.to_bytes(SNC_LIB_SST) },
         { FILE_NOT_FOUND_SAPLOGON_INI, "saplogon.ini file not found" },
-        { MISSING_SNC_LIB_DLL, "SncLib dll not found" }
+        { MISSING_SNC_LIB_DLL, "SncLib dll not found" },
+        { SECUDIR_MISSING_CREDV2, "Secudir directory does not contain a cred_v2 file" },
+        { SECUDIR_MISSING_CRT, "Secudir directory does not contain two .crt files" },
+        { SECUDIR_MISSING_PSE, "Secudir directory does not contain a .pse file" }
 };
 
 map<AuthType, string> authTypeStrings = {
@@ -186,14 +191,15 @@ struct versionedFile
     }
 };
 
-struct dllStruct
+struct fileStruct
 {
     string bitness;
     versionedFile file;
     vector<versionedFile> associatedFiles;
 };
-vector<dllStruct> vecOdboProviders;
-vector<dllStruct> vecSnclibContents;
+vector<fileStruct> vecOdboProviders;
+vector<fileStruct> vecSnclibContents;
+vector<fileStruct> vecSecudirContents;
 
 map<string,string> mapEnvironmentVariables;
 
@@ -291,7 +297,7 @@ string jsonArray( string name, string contents )
 void stripFinalComma( string& json )
 {
     size_t finalCommaPos = json.find_last_of( ",\n" );
-    if ( finalCommaPos > 0 )
+    if ( finalCommaPos != string::npos )
         json = json.substr( 0, finalCommaPos-1 );
 }
 
@@ -318,15 +324,23 @@ void outputInstalledComponents()
     serializedJson += jsonArray( "installed-components", json ) + ",\n";
 }
 
-void outputFileList( const string& caption, const string& jsonArrayName, const vector<dllStruct>& vecFiles)
+void outputFileList( const string& caption, const string& jsonArrayName, const vector<fileStruct>& vecFiles, bool showFilenamesOnly = false )
 {
     cout << caption << endl << endl;
     for ( auto op : vecFiles )
     {
-        cout << "  " << op.bitness << " bit, " << op.file.location << ", version: " << op.file.versionString() << endl;
-        cout << endl;
+        if ( !showFilenamesOnly )
+        {
+            cout << "  " << op.bitness << " bit, " << op.file.location << ", version: " << op.file.versionString() << endl;
+            cout << endl;
+        }
         for ( auto as : op.associatedFiles )
-            cout << "          " << as.location << ", version: " << as.versionString() << endl;
+        {
+            cout << "          " << as.location;
+            if ( !showFilenamesOnly )
+                cout << ", version: " + as.versionString();
+            cout << endl;
+        }
         if ( op.associatedFiles.size() > 0 )
             cout << endl;
     }
@@ -368,6 +382,11 @@ void outputOdboProviders()
 void outputSnclibContents()
 {
     outputFileList("Snc Lib", "snc-lib", vecSnclibContents );
+}
+
+void outputSecudirContents()
+{
+    outputFileList("Secudir", "secudir", vecSecudirContents, true);
 }
 
 void outputEnvironmentVariables()
@@ -524,6 +543,9 @@ void outputConfigWarnings( bool bSSOConnect, bool bImpersonateViaSST )
 {
     vector<string> warnings;
 
+    // We've included some values in warningConditions that should
+    // only be shown as warnings under certain conditions (which
+    // would have been awkward to pre-determine).
     for ( auto warnCondition : warningConditions )
     {
         switch ( warnCondition )
@@ -1616,38 +1638,52 @@ void fileVersion( string& path, WIN32_FIND_DATA& fileInfo, UINT version[4] )
     version[3] = leastMinor;
 }
 
-void associatedFile( string& path, WIN32_FIND_DATA& fileInfo, dllStruct& dll )
+void associatedFile( string& path, WIN32_FIND_DATA& fileInfo, fileStruct& baseFile )
 {
+    string fileName = converter.to_bytes(fileInfo.cFileName);
+    if ( fileName == "." || fileName == ".." )
+        return;
+
     versionedFile asFile;
     asFile.location = path + "\\" + converter.to_bytes( fileInfo.cFileName );
     fileVersion( path, fileInfo, asFile.version );
-    dll.associatedFiles.push_back( asFile );
+    baseFile.associatedFiles.push_back( asFile );
 
-    if ( asFile.location.compare(dll.file.location ) == 0 )
-        dll.file.copyVersion( asFile.version );
+    if ( asFile.location.compare(baseFile.file.location ) == 0 )
+        baseFile.file.copyVersion( asFile.version );
 }
 
-void fileVersions( dllStruct& dll, string extension )
+void findMatchingFiles( fileStruct& baseFile, string extension )
 {
-    const string& dllFileName = dll.file.location;
+    const string& location = baseFile.file.location;
+    string path;
+    CString pathTarget;
+
+    if ( extension.empty() )
+    {
+        path = location;
+        pathTarget = (CString)path.c_str() + "\\*";
+    }
+    else
+    {
+        size_t idx = location.find_last_of( "\\" );
+        if ( idx == string::npos )
+            return;
+
+        path = location.substr( 0, idx );
+        pathTarget = (CString)path.c_str() + "\\*." + (CString)extension.c_str();
+    }
 
     WIN32_FIND_DATA fileInfo;
     HANDLE h;
-
-    size_t idx = dllFileName.find_last_of( "\\" );
-    if ( idx < 0 )
-        return;
-
-    string path = dllFileName.substr( 0, idx );
-    CString pathTarget = (CString)path.c_str() + "\\*." + (CString)extension.c_str();
 
     h = FindFirstFile( pathTarget, &fileInfo );
     if ( h == INVALID_HANDLE_VALUE )
         return;
 
-    associatedFile( path, fileInfo, dll);
+    associatedFile( path, fileInfo, baseFile);
     while ( FindNextFile( h, &fileInfo ) )
-        associatedFile( path, fileInfo, dll);
+        associatedFile( path, fileInfo, baseFile);
 }
 
 //bool OSIs64Bit()
@@ -1664,7 +1700,7 @@ void fileVersions( dllStruct& dll, string extension )
 //#endif
 //}
 
-void checkDriverVersion( const dllStruct& dll )
+void checkDriverVersion( const fileStruct& dll )
 {
     if ( dll.bitness.compare("32") == 0 && dll.file.compareVersion( MIN_DRIVER_VERSION_32_BIT ) < 0 )
         warningConditions.insert( BAD_32BIT_ODBO_PROVIDER_VERSION );
@@ -1699,10 +1735,10 @@ void odboProviders()
 
         wstring name = RegistryQueryValue( key, _T( "" ) );
 
-        dllStruct dll;
+        fileStruct dll;
         dll.bitness = "32";
         dll.file.location = trimNulls( name );
-        fileVersions( dll, "dll" );
+        findMatchingFiles( dll, "dll" );
         vecOdboProviders.push_back(dll);
 
         checkDriverVersion(dll);
@@ -1718,10 +1754,10 @@ void odboProviders()
 
         wstring name = RegistryQueryValue( key, _T( "" ) );
 
-        dllStruct dll;
+        fileStruct dll;
         dll.bitness = "64";
         dll.file.location = trimNulls( name );
-        fileVersions(dll, "dll" );
+        findMatchingFiles(dll, "dll" );
         vecOdboProviders.push_back(dll);
 
         checkDriverVersion(dll);
@@ -1739,7 +1775,7 @@ void odboProviders()
     outputOdboProviders();
 }
 
-void checkSncLibContents( const dllStruct& dll, bool bImpersonateViaSST )
+void checkSncLibContents( const fileStruct& dll, bool bImpersonateViaSST )
 {
     if ( bImpersonateViaSST )
     {
@@ -1752,13 +1788,59 @@ void checkSncLibContents( const dllStruct& dll, bool bImpersonateViaSST )
             warningConditions.insert(BAD_SNC_LIB_VERSION_SSO);
     }
 
-    // check that op.file.location exists in op.associatedFiles
+    // check that dll.file.location exists in dll.associatedFiles
     for ( auto af : dll.associatedFiles )
     {
         if ( dll.file.location == af.location )
             return;
     }
     warningConditions.insert(MISSING_SNC_LIB_DLL);
+}
+
+void checkSecudirContents(const fileStruct& dir, bool bImpersonateViaSST)
+{
+    if ( !bImpersonateViaSST )
+        return;
+
+    int countCrt = 0;
+    int countPse = 0;
+    int countCredV2 = 0;
+
+    for ( auto af : dir.associatedFiles )
+    {
+        size_t idx = af.location.find_last_of("\\");
+        if ( idx == string::npos )
+            continue;
+
+        string fileName = af.location.substr(idx + 1);
+
+        if ( fileName == "cred_v2" )
+        {
+            countCredV2++;
+        }
+        else
+        {
+            size_t finalDotPos = fileName.find_last_of(".");
+            if ( finalDotPos == string::npos )
+                continue;
+
+            string ext = fileName.substr(finalDotPos + 1);
+
+            if ( ext == "crt" )
+                countCrt++;
+            else if ( ext == "pse" )
+                countPse++;
+        }
+    }
+
+    if ( countCredV2 == 0 )
+        warningConditions.insert(SECUDIR_MISSING_CREDV2);
+
+    if ( countCrt < 2 )
+        warningConditions.insert(SECUDIR_MISSING_CRT);
+
+    if ( countPse < 1 )
+        warningConditions.insert(SECUDIR_MISSING_PSE);
 }
 
 // NOTE snclibContents considers !bImpersonateViaSST to 
@@ -1772,15 +1854,36 @@ void snclibContents( bool bImpersonateViaSST )
 
     // TODO consider how to handle bitness
 
-    dllStruct dll;
+    fileStruct dll;
     dll.bitness = "--";
     dll.file.location = snclib;
-    fileVersions(dll, "dll");
+    findMatchingFiles(dll, "dll");
     vecSnclibContents.push_back(dll);
 
     checkSncLibContents(dll, bImpersonateViaSST);
 
     outputSnclibContents();
+}
+
+void secudirContents(bool bImpersonateViaSST)
+{
+    if ( !bImpersonateViaSST )
+        return;
+
+    auto it = mapEnvironmentVariables.find("SECUDIR");
+    if ( it == mapEnvironmentVariables.end() )
+        return;
+    string secudir = it->second;
+
+    fileStruct dir;
+    dir.bitness = "--";
+    dir.file.location = secudir;
+    findMatchingFiles(dir, "");
+    vecSecudirContents.push_back(dir);
+
+    checkSecudirContents(dir, bImpersonateViaSST);
+
+    outputSecudirContents();
 }
 
 void printDiffHeader()
@@ -1946,6 +2049,7 @@ int main(int argc, char* argv[])
     odboProviders();
     environmentVariables( bImpersonateViaSST );
     snclibContents( bImpersonateViaSST );
+    secudirContents(bImpersonateViaSST);
     sapLogonConfigSource();
     chooseConnection();
 
