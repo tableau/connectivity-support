@@ -89,7 +89,7 @@ set<warnCondition> warningConditions;
 
 // Note: As currently coded, version constants must have all
 //       four digits, to prevent uninitialized trailing digits garbage. 
-UINT MIN_DRIVER_VERSION_32_BIT[] = { 4,0,0,7 };
+UINT MIN_DRIVER_VERSION_32_BIT[] = { 4,0,0,8 };
 UINT MIN_DRIVER_VERSION_64_BIT[] = { 4,0,0,7 };
 UINT MIN_SNC_LIB_VERSION_SST[] = { 8,4,33,0 };
 UINT MIN_SNC_LIB_VERSION_SSO[] = { 8,4,49,0 };
@@ -1573,6 +1573,9 @@ void connect( const wstring& connStr, bool& bDataSourceOpen, bool& bSessionOpen,
 
     if ( bDataSourceOpen && bSessionOpen && bManagedCall )
     {
+        cout << endl;
+        system("PAUSE");  // likely will want to move this if we add query execution
+
         session.Close();
         ds.Close();
     }
@@ -2068,8 +2071,6 @@ int main(int argc, char* argv[])
     outputExitCode(exitCode);
 
     persistResults();
-
-    system( "PAUSE" );
 
     exit( exitCode );
 }
