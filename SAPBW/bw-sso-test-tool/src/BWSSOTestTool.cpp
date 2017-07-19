@@ -51,6 +51,7 @@ enum warnCondition
     NO_32BIT_ODBO_PROVIDER,
     NO_64BIT_ODBO_PROVIDER,
     BAD_32BIT_ODBO_PROVIDER_VERSION,
+    BAD_32BIT_ODBO_PROVIDER_VERSION_SST,
     BAD_64BIT_ODBO_PROVIDER_VERSION,
     BAD_SNC_LIB_VERSION_SSO,
     BAD_SNC_LIB_VERSION_SST,
@@ -89,7 +90,8 @@ set<warnCondition> warningConditions;
 
 // Note: As currently coded, version constants must have all
 //       four digits, to prevent uninitialized trailing digits garbage. 
-UINT MIN_DRIVER_VERSION_32_BIT[] = { 4,0,0,8 };
+UINT MIN_DRIVER_VERSION_32_BIT[] = { 4,0,0,7 };
+UINT MIN_DRIVER_VERSION_32_BIT_SST[] = { 4,0,0,8 };
 UINT MIN_DRIVER_VERSION_64_BIT[] = { 4,0,0,7 };
 UINT MIN_SNC_LIB_VERSION_SST[] = { 8,4,33,0 };
 UINT MIN_SNC_LIB_VERSION_SSO[] = { 8,4,49,0 };
@@ -118,6 +120,7 @@ map<warnCondition, string> warnStrings = {
         { BAD_SNC_LIB_VERSION_SSO, "SncLib for SSO version less than " + fileVersionToString(MIN_SNC_LIB_VERSION_SSO) },
         { BAD_SNC_LIB_VERSION_SST, "SncLib for SST version less than " + fileVersionToString(MIN_SNC_LIB_VERSION_SST) },
         { BAD_32BIT_ODBO_PROVIDER_VERSION, "32-bit ODBO provider version less than " + fileVersionToString( MIN_DRIVER_VERSION_32_BIT ) },
+        { BAD_32BIT_ODBO_PROVIDER_VERSION_SST, "32-bit ODBO provider version less than " + fileVersionToString(MIN_DRIVER_VERSION_32_BIT_SST) },
         { BAD_64BIT_ODBO_PROVIDER_VERSION, "64-bit ODBO provider version less than " + fileVersionToString( MIN_DRIVER_VERSION_64_BIT ) + ", will not support Landscape XML" },
         { ENV_VAR_RFC_TRACE_NOT_SET, "Unable to set RFC_TRACE environment variable" },
         { ENV_VAR_APPDATA_NOT_FOUND, "Environment variable APPDATA not found or empty" },
@@ -1703,16 +1706,21 @@ void findMatchingFiles( fileStruct& baseFile, string extension )
 //#endif
 //}
 
-void checkDriverVersion( const fileStruct& dll )
+void checkDriverVersion( const fileStruct& dll, bool bImpersonateViaSST )
 {
-    if ( dll.bitness.compare("32") == 0 && dll.file.compareVersion( MIN_DRIVER_VERSION_32_BIT ) < 0 )
-        warningConditions.insert( BAD_32BIT_ODBO_PROVIDER_VERSION );
+    if ( dll.bitness.compare("32") == 0 )
+    {
+        if ( bImpersonateViaSST && dll.file.compareVersion(MIN_DRIVER_VERSION_32_BIT_SST) < 0 )
+            warningConditions.insert(BAD_32BIT_ODBO_PROVIDER_VERSION_SST);
+        else if ( !bImpersonateViaSST && dll.file.compareVersion(MIN_DRIVER_VERSION_32_BIT) < 0 )
+            warningConditions.insert(BAD_32BIT_ODBO_PROVIDER_VERSION);
+    }
     else if ( dll.file.compareVersion( MIN_DRIVER_VERSION_64_BIT ) < 0 )
         warningConditions.insert( BAD_64BIT_ODBO_PROVIDER_VERSION );
 }
 
 // TODO make this work when app is built for 32-bit OS? 
-void odboProviders()
+void odboProviders(bool bImpersonateViaSST)
 {
     bool b32found = false;
     bool b64found = false;
@@ -1744,7 +1752,7 @@ void odboProviders()
         findMatchingFiles( dll, "dll" );
         vecOdboProviders.push_back(dll);
 
-        checkDriverVersion(dll);
+        checkDriverVersion(dll, bImpersonateViaSST);
 
         RegCloseKey( key );
     }
@@ -1763,7 +1771,7 @@ void odboProviders()
         findMatchingFiles(dll, "dll" );
         vecOdboProviders.push_back(dll);
 
-        checkDriverVersion(dll);
+        checkDriverVersion(dll, bImpersonateViaSST);
 
         RegCloseKey( key );
     }
@@ -2049,7 +2057,7 @@ int main(int argc, char* argv[])
     }
 
     installedComponents();
-    odboProviders();
+    odboProviders( bImpersonateViaSST );
     environmentVariables( bImpersonateViaSST );
     snclibContents( bImpersonateViaSST );
     secudirContents(bImpersonateViaSST);
