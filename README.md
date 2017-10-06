@@ -1,4 +1,6 @@
 # connectivity-support
+[![Community Supported](https://img.shields.io/badge/Support%20Level-Community%20Supported-457387.svg)](https://www.tableau.com/support-levels-it-and-developer-tools)
+
 Provides a set of tools for diagnosing common infrastructure concerns in the connectivity layer.
 
 ## SAPBW
@@ -8,6 +10,6 @@ This is a Windows console application that looks up SAP BW-related configuration
 
 #### Is bw-sso-test-tool supported?
 
-A standard disclaimer: bw-sso-test-tool is made available AS-IS with no support and no warranty whatsoever. Despite efforts to write good and useful code there may be bugs that cause unexpected and undesirable behavior. The software is strictly “use at your own risk.”
+The bw-sso-test-tool is made available under community support. Despite efforts to write good and useful code there may be bugs that cause unexpected and undesirable behavior. The software is strictly “use at your own risk.”
 
 The good news: This is intended to be a self-service tool. You are free to modify it in any way to meet your needs.
